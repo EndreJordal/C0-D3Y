@@ -5,7 +5,7 @@
   "main": "bot.js",
   "type": "module",
   "scripts": {
-    "deploy" : "node deploy-commands.js",
+    "deploy": "node deploy-commands.js",
     "dev": "nodemon --quiet .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^20.3.1",
     "discord.js": "^14.11.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "googleapis": "^118.0.0"
   }
 }
