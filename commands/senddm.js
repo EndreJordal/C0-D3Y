@@ -11,7 +11,10 @@ const execute = async interaction => {
     const message = await user.send( "Hello!" );
     console.log( `Sent message ${ message.content } to ${ user.tag }.` )
 
-    await interaction.reply( "message sent ;)" );
+    await interaction.reply({
+      content   : "message sent ;)",
+      ephemeral : true,
+    });
   }
   catch ( error ) {
     console.error( error );

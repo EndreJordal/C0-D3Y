@@ -8,7 +8,6 @@ const data = new SlashCommandBuilder()
     .setDescription( "The selected role." ) );
 
 const execute = async interaction => {
-  const roleId    = interaction.options.getRole( "role" )?.id;
   const roles     = interaction.guild.roles.cache;
   const roleNames = roles.map( ({ name }) => name ).join`, `;
 
@@ -16,7 +15,10 @@ const execute = async interaction => {
     .map( role => `${ role } has ${ role.members.size } member(s): ${ role.members.map( ({ displayName }) => displayName ).join`, ` }.` )
     .join`\n`
 
-  await interaction.reply( `There are ${ roles.size } roles on this server; ${ roleNames }.\n${ members }` );
+  await interaction.reply({
+    content   : `There are ${ roles.size } roles on this server; ${ roleNames }.\n${ members }`,
+    ephemeral : true,
+  });
 };
 
 export { data, execute };

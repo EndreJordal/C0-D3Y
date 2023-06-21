@@ -24,7 +24,11 @@ const __dirname         = path.dirname( __filename );
 // initialize a new client
 //------------------------------------------------------------------------------
 const client = new Client({
-  intents : [ GatewayIntentBits.Guilds ]
+  intents : [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.DirectMessages,
+  ]
 });
 
 //------------------------------------------------------------------------------

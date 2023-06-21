@@ -29,16 +29,17 @@ const execute = async interaction => {
   const valueInputOption = "USER_ENTERED";
   const resource = { values };
 
-  const result = await sheets.spreadsheets.values.append({
+  await sheets.spreadsheets.values.append({
     range,
     resource,
     spreadsheetId,
     valueInputOption,
   });
 
-  console.log(result.data);
-
-  await interaction.reply( "Updated Sheet :)" );
+  await interaction.reply({
+    content   : "Updated Sheet :)" ,
+    ephemeral : true               ,
+  });
 };
 
 export { data, execute };

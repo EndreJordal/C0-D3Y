@@ -9,7 +9,10 @@ const execute = async interaction => {
     .map( ([ _, { name } ]) => name )
     .join`, `;
 
-  await interaction.reply( `Your roles are: ${ roles }.`);
+  await interaction.reply({
+    content   : `Your roles are: ${ roles }.` ,
+    ephemeral : true                          ,
+  });
 };
 
 export { data, execute };
