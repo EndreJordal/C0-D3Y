@@ -23,8 +23,10 @@ const execute = async interaction => {
   }))
   .data.values
   console.log(content)
+
+  const randomLink = content[0][Math.floor(Math.random() * content[0].length)]
   await interaction.reply({
-    content: "Success"         ,
+    content: randomLink         ,
     ephemeral : true ,
   });
 };
