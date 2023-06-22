@@ -24,7 +24,7 @@ const execute = async interaction => {
   .data.values
   console.log(content)
 
-  const randomLink = content[0][Math.floor(Math.random() * content[0].length)]
+  const randomLink = content.flat()[Math.floor(Math.random() * content.length)]
   await interaction.reply({
     content: randomLink         ,
     ephemeral : true ,
