@@ -17,8 +17,6 @@ import { GatewayIntentBits } from "discord.js";
 //------------------------------------------------------------------------------
 dotenv.config();
 const { DISCORD_TOKEN } = process.env;
-const __filename        = new URL( import.meta.url ).pathname;
-const __dirname         = path.dirname( __filename );
 
 //------------------------------------------------------------------------------
 // initialize a new client
@@ -35,7 +33,7 @@ const client = new Client({
 // dynamically load commands from a folder
 //------------------------------------------------------------------------------
 client.commands      = new Collection();
-const commandsFolder = path.join( __dirname, "commands" );
+const commandsFolder = path.resolve( "./commands" );
 
 const commandFiles = ( await fs
   .readdir( commandsFolder ) )
@@ -43,7 +41,7 @@ const commandFiles = ( await fs
 
 commandFiles.forEach( async file => {
   const filePath = path.join( commandsFolder, file );
-  const command  = await import( filePath );
+  const command  = await import( `file:${filePath}` );
   
   if ( command[ "data" ] && command[ "execute" ] )
     client.commands.set( command.data.name, command );
@@ -58,14 +56,14 @@ commandFiles.forEach( async file => {
 //------------------------------------------------------------------------------
 // handle events
 //------------------------------------------------------------------------------
-const eventsFolder = path.join( __dirname, "events" );
+const eventsFolder = path.resolve( "./events" );
 const eventFiles = ( await fs
   .readdir( eventsFolder ) )
   .filter( fileName => fileName.endsWith( ".js" ) );
 
 eventFiles.forEach( async file => {
   const filePath = path.join( eventsFolder, file );
-  const event    = await import( filePath );
+  const event    = await import( `file:${filePath}` );
 
   client[ event.once ? "once" : "on" ]( event.name, ( ...args ) => 
     event.execute( ...args )
