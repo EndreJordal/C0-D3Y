@@ -3,8 +3,13 @@ import { google } from "googleapis";
 import dotenv from "dotenv";
 
 const data = new SlashCommandBuilder()
-  .setName( "sendtosheet" )
-  .setDescription( "Adds a new row in the sheet." );
+  .setName("forslagskassen")
+  .setDescription("Bruk denne for å sende et forslag til kurset")
+  .addStringOption(option =>
+    option.setName("forslag")
+      .setDescription("Skriv inn ditt forslag her")
+      .setRequired(true)
+  );
 
 const execute = async interaction => {
   const username = interaction.user.username.toLowerCase();
@@ -16,13 +21,12 @@ const execute = async interaction => {
   });
 
   const sheets = google.sheets({ version: "v4", auth });
-  const range = "Ark 1!A2:D4";
+  const range = "Forslagskassen!A2:D4";
 
   const values = [[
-    username,
     new Date().toUTCString(),
-    Math.floor(Math.random() * 10),
-    "lorem ipsum"
+    username,
+    interaction.options.getString("forslag")
   ]];
 
   const spreadsheetId = process.env.SHEET_ID;
@@ -37,8 +41,8 @@ const execute = async interaction => {
   });
 
   await interaction.reply({
-    content   : "Updated Sheet :)" ,
-    ephemeral : true               ,
+    content   : "Tusen takk for ditt forslag!" ,
+    ephemeral : true                           ,
   });
 };
 

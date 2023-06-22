@@ -13,13 +13,15 @@ const execute = async interaction => {
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });
 
-  const sheets        = google.sheets({ version: "v4", auth });
-  const range         = "Regler!A:A";
-  const spreadsheetId = process.env.SHEET_ID;
+  const sheets            = google.sheets({ version: "v4", auth });
+  const range             = "Regler!A:A";
+  const spreadsheetId     = process.env.SHEET_ID;
+  const valueRenderOption = "UNFORMATTED_VALUE";
 
   const content = ( await sheets.spreadsheets.values.get({
-    spreadsheetId ,
-    range         ,
+    spreadsheetId     ,
+    valueRenderOption ,
+    range             ,
   }))
   .data.values.flat().join("\n")
   

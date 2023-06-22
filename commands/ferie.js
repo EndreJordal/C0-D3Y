@@ -5,8 +5,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const data = new SlashCommandBuilder()
-  .setName( "technerdz" )
-  .setDescription( "Gir deg en tilfeldig plukket link til noe kult/interessant 🤓" );
+  .setName( "ferie" )
+  .setDescription( "Gir deg en oppdatert oversikt over kommende ferie og fridager for Kodehode 🏝️" );
 
 const execute = async interaction => {
   const auth = await google.auth.getClient({
@@ -14,21 +14,19 @@ const execute = async interaction => {
   });
 
   const sheets            = google.sheets({ version: "v4", auth });
-  const range             = "Technerdz!A:A";
+  const range             = "Ferie!A:A";
   const spreadsheetId     = process.env.SHEET_ID;
-  const valueRenderOption = "FORMULA";
+  const valueRenderOption = "UNFORMATTED_VALUE";
 
   const content = ( await sheets.spreadsheets.values.get({
-    spreadsheetId    ,
-    range            ,
-    valueRenderOption,
+    spreadsheetId     ,
+    valueRenderOption ,
+    range             ,
   }))
-  .data.values
+  .data.values.flat().join("\n")
   
-
-  const randomLink = content.flat()[Math.floor(Math.random() * content.length)]
   await interaction.reply({
-    content: randomLink         ,
+    content         ,
     ephemeral : true ,
   });
 };
