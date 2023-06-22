@@ -17,18 +17,18 @@ const { GUILD_ID      } = process.env;
 
 const commands = [];
 
-const __filename   = new URL( import.meta.url ).pathname;
-const __dirname    = path.dirname( __filename );
-const commandsPath = path.join( __dirname, "commands" );
+const commandsPath = path.resolve("./commands");
 
 const commandFiles = ( await fs
   .readdir( commandsPath ) )
   .filter( fileName => fileName.endsWith( ".js" ) );
 
 // load all commandfiles from the command folder
-for ( const fileName of commandFiles ) {
-  const filePath = path.join( commandsPath, fileName );
-  const command  = await import( filePath );
+for (const fileName of commandFiles) {
+  const filePath = path.join(commandsPath, fileName);
+  const fileUrl = new URL(`file:${filePath}`);
+  const command = await import(fileUrl.href);
+
   
   if ( "data" in command && "execute" in command )
     commands.push( command.data.toJSON() );
