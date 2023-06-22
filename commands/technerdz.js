@@ -5,8 +5,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const data = new SlashCommandBuilder()
-  .setName( "hjelp" )
-  .setDescription( "Gir en oversikt over funksjoner du kan bruke" );
+  .setName( "technerdz" )
+  .setDescription( "Gir deg en tilfeldig plukket link til noe kult/interessant 🤓" );
 
 const execute = async interaction => {
   const auth = await google.auth.getClient({
@@ -14,17 +14,17 @@ const execute = async interaction => {
   });
 
   const sheets        = google.sheets({ version: "v4", auth });
-  const range         = "Hjelp!A1";
+  const range         = "Technerdz!A:A";
   const spreadsheetId = process.env.SHEET_ID;
 
   const content = ( await sheets.spreadsheets.values.get({
     spreadsheetId ,
     range         ,
   }))
-  .data.values[0][0]
-
+  .data.values
+  console.log(content)
   await interaction.reply({
-    content          ,
+    content: "Success"         ,
     ephemeral : true ,
   });
 };
