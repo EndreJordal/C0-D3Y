@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, ModalBuilder, TextInputBuilder, 
          TextInputStyle, ActionRowBuilder } from "discord.js";
-import { google } from "googleapis";
+import { googleSheet } from "../utils/googleSheet.js";
 import dotenv from "dotenv";
 
 const data = new SlashCommandBuilder()
@@ -36,7 +36,7 @@ const execute = async interaction => {
       
       //post to google sheets
 
-      const auth = await google.auth.getClient({
+      /* const auth = await google.auth.getClient({
         scopes: ["https://www.googleapis.com/auth/spreadsheets"],
       });
     
@@ -58,7 +58,22 @@ const execute = async interaction => {
         resource,
         spreadsheetId,
         valueInputOption,
-      });
+      }); */
+      
+      const values = [[
+        new Date().toLocaleString("nb-NO"),
+        username,
+        modalInteraction.fields.getTextInputValue("suggestionInput")
+      ]];
+      const resource = { values };
+
+      await googleSheet({
+        write: true,
+        sheetName: "Forslagskassen",
+        range: "A2:D4",
+        resource,
+        valueInputOption: "USER_ENTERED"
+      })
 
       modalInteraction.reply({
         content: "Tusen takk for ditt forslag!",
