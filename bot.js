@@ -11,6 +11,7 @@ import path   from "node:path";
 import { Client            } from "discord.js";
 import { Collection        } from "discord.js";
 import { GatewayIntentBits } from "discord.js";
+import { Partials          } from "discord.js";
 
 //------------------------------------------------------------------------------
 // load environment variables
@@ -22,11 +23,14 @@ const { DISCORD_TOKEN } = process.env;
 // initialize a new client
 //------------------------------------------------------------------------------
 const client = new Client({
+  partials: [
+    Partials.Channel ,
+  ],
   intents : [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.DirectMessages,
-  ]
+    GatewayIntentBits.DirectMessages ,
+    GatewayIntentBits.GuildMembers   ,
+    GatewayIntentBits.Guilds         ,
+  ],
 });
 
 //------------------------------------------------------------------------------
