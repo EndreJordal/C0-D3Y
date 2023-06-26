@@ -6,10 +6,9 @@ dotenv.config();
 
 const name    = Events.MessageCreate;
 const execute = async message => {
-  
-  /* if ( message?.author?.bot ) return;
+  if ( message?.author?.bot ) return;
 
-  const username = message?.author?.username;
+  /* const username = message?.author?.username;
   const reply    = message?.content;
 
   
@@ -36,9 +35,9 @@ const execute = async message => {
     resource,
     spreadsheetId,
     valueInputOption,
-  });
- */
-  //await message.reply( "X" );
+  }); */
+
+  await message.reply( "X" );
 };
 
 export { name, execute };

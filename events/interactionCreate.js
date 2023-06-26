@@ -2,6 +2,7 @@ import { Events } from "discord.js";
 
 const name    = Events.InteractionCreate;
 const execute = async interaction => {
+  console.log("test")
   if ( !interaction.isChatInputCommand() ) return;
 
   const { commandName } = interaction;
