@@ -4,16 +4,15 @@ import dotenv     from "dotenv";
 
 dotenv.config();
 
-Array.prototype.random = function () {
-  return this[ Math.floor( Math.random() * this.length ) ];
-}
-
 const name    = Events.MessageCreate;
 const execute = async message => {
-  if ( message?.author?.bot ) return;
+  
+  /* if ( message?.author?.bot ) return;
 
   const username = message?.author?.username;
   const reply    = message?.content;
+
+  
 
   const auth = await google.auth.getClient({
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
@@ -38,8 +37,8 @@ const execute = async message => {
     spreadsheetId,
     valueInputOption,
   });
-
-  await message.reply( "Takk for svar :)" );
+ */
+  //await message.reply( "X" );
 };
 
 export { name, execute };

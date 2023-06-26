@@ -7,6 +7,8 @@ const execute = async interaction => {
   const { commandName } = interaction;
   const command         = interaction.client.commands.get( commandName );
 
+  //if (interaction.isModalSubmit()) return
+
   if ( !command ) {
     console.error( `No command matching ${ commandName } was found.` );
     return;
