@@ -16,7 +16,10 @@ const execute = async interaction => {
   
     const correctsolution = "{|klpy,-6}kz;<=,on}khz?@>OI"
     const submittedSolution = interaction.options.getString("solution")
-    const incorrectReply = "Wrong answer, please try again."
+    const incorrectReply = `Wrong answer, please try again.
+If you think you got it right, but it says it's wrong.
+You may ask Endre, Joe or Sindre for a check.`
+
     const correctReply = `Correct answer!
 
 Congratulations on completing the meatspace part of your challenges,
@@ -32,6 +35,10 @@ ssh admin@10.33.221.66
 \`\`\`
 Remember, the key to access lies in the password: "whiterabbit"
 
+Answer "yes" when SSH asks you a question. When it asks for a password,
+it will look like it is not typing, but it is. Just enter the password
+and press enter.
+
 Once you breach their defenses, a file containing crucial instructions
 awaits your discovery. Employ the sacred "cat" command to unveil its
 secrets:
@@ -41,7 +48,6 @@ cat instructions.txt
 
 Armed with knowledge, you shall navigate their intricate server structure
 using the following tools bestowed upon you:
-
 \`\`\`bash
 tree                     # view folder structure of entire server
 pwd                      # show path of current folder
@@ -53,6 +59,7 @@ ls -l                    # show contents of current folder as a vertical list
 ls -a                    # include hidden files in current folder
 cat [filename]           # view contents of a file
 grep [search] [filename] # search line by line for a string in a file
+exit                     # logout the ssh session
 \`\`\`
 
 If you are stuck use "cd" to return to the starting folder and "cat
