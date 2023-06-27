@@ -1,8 +1,8 @@
 import { Events } from "discord.js";
+import { googleSheet } from "../utils/googleSheet.js";
 
 const name    = Events.InteractionCreate;
 const execute = async interaction => {
-  console.log("test")
   if ( !interaction.isChatInputCommand() ) return;
 
   const { commandName } = interaction;
@@ -16,6 +16,22 @@ const execute = async interaction => {
   }
 
   try {
+    // Logging commands to Google Sheets
+    const values = [[
+      new Date().toLocaleString("nb-NO"),
+      interaction.member.user.username.toLowerCase(),
+      `/${commandName}`
+    ]];
+    const resource = { values };
+
+    await googleSheet({
+      write: true,
+      sheetName: "Kommando-Logg",
+      range: "A2:C2",
+      resource,
+      valueInputOption: "USER_ENTERED"
+    })
+    // Running the command
     await command.execute( interaction );
   }
 

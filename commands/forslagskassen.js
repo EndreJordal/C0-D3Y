@@ -33,33 +33,7 @@ const execute = async interaction => {
   interaction
     .awaitModalSubmit({filter, time: 600000000})
     .then(async (modalInteraction) => {
-      
-      //post to google sheets
-
-      /* const auth = await google.auth.getClient({
-        scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-      });
-    
-      const sheets = google.sheets({ version: "v4", auth });
-      const range = "Forslagskassen!A2:D4";
-    
-      const values = [[
-        new Date().toLocaleString("nb-NO"),
-        username,
-        modalInteraction.fields.getTextInputValue("suggestionInput")
-      ]];
-    
-      const spreadsheetId = process.env.SHEET_ID;
-      const valueInputOption = "USER_ENTERED";
-      const resource = { values };
-    
-      await sheets.spreadsheets.values.append({
-        range,
-        resource,
-        spreadsheetId,
-        valueInputOption,
-      }); */
-      
+           
       const values = [[
         new Date().toLocaleString("nb-NO"),
         username,
@@ -70,7 +44,7 @@ const execute = async interaction => {
       await googleSheet({
         write: true,
         sheetName: "Forslagskassen",
-        range: "A2:D4",
+        range: "A2:C2",
         resource,
         valueInputOption: "USER_ENTERED"
       })

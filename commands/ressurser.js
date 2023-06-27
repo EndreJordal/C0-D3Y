@@ -9,14 +9,11 @@ const data = new SlashCommandBuilder()
   .setDescription( "Gir deg en oversikt over nyttige ressurser og verktøy for Kodehoder 🧑‍💻" );
 
 const execute = async interaction => {
-  const result = await googleSheet({
+  const content = (await googleSheet({
     write: false,
     sheetName: "Ressurser",
     range: "A:A",
-    valueInputOption: "UNFORMATTED_VALUE",
-  });
-  
-  const content = result.flat().join("\n")
+  })).flat().join("\n")
 
   await interaction.reply({
     content         ,

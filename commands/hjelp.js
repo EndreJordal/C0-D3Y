@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { google } from "googleapis";
+import { googleSheet } from "../utils/googleSheet.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,19 +9,12 @@ const data = new SlashCommandBuilder()
   .setDescription( "Gir en oversikt over funksjoner du kan bruke" );
 
 const execute = async interaction => {
-  const auth = await google.auth.getClient({
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-  });
 
-  const sheets        = google.sheets({ version: "v4", auth });
-  const range         = "Hjelp!A1";
-  const spreadsheetId = process.env.SHEET_ID;
-
-  const content = ( await sheets.spreadsheets.values.get({
-    spreadsheetId ,
-    range         ,
-  }))
-  .data.values[0][0]
+  const content = (await googleSheet({
+    write: false,
+    sheetName: "Hjelp",
+    range: "A1",
+  }))[0][0]
 
   await interaction.reply({
     content          ,
