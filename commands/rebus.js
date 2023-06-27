@@ -16,9 +16,56 @@ const execute = async interaction => {
   
     const correctsolution = "{|klpy,-6}kz;<=,on}khz?@>OI"
     const submittedSolution = interaction.options.getString("solution")
-    const correctReply = "Good job! You solved it! lol"
-    const incorrectReply = "No. Just no."
-    const content = correctsolution === submittedSolution ? correctReply : incorrectReply
+    const incorrectReply = "Wrong answer, please try again."
+    const correctReply = `Correct answer!
+
+Congratulations on completing the meatspace part of your challenges,
+fellow rebels. The time has come to transcend into the vast realms of
+cyberspace, where we'll unleash our hacking prowess upon those corporate
+swine. Prepare yourself for the ultimate hack, for I have acquired a
+login to one of SinTech Solutions critical servers.
+
+To infiltrate their stronghold, execute the following command within
+your terminal using the mighty SSH protocol:
+\`\`\`bash
+ssh admin@10.33.221.66
+\`\`\`
+Remember, the key to access lies in the password: "whiterabbit"
+
+Once you breach their defenses, a file containing crucial instructions
+awaits your discovery. Employ the sacred "cat" command to unveil its
+secrets:
+\`\`\`bash
+cat instructions.txt
+\`\`\`
+
+Armed with knowledge, you shall navigate their intricate server structure
+using the following tools bestowed upon you:
+
+\`\`\`bash
+tree                     # view folder structure of entire server
+pwd                      # show path of current folder
+cd                       # return to start folder
+cd ..                    # move up to parent folder
+cd [foldername]          # move into folder
+ls                       # list contents of current folder
+ls -l                    # show contents of current folder as a vertical list
+ls -a                    # include hidden files in current folder
+cat [filename]           # view contents of a file
+grep [search] [filename] # search line by line for a string in a file
+\`\`\`
+
+If you are stuck use "cd" to return to the starting folder and "cat
+instructions.txt" from that folder to view the instructions again. Use
+"tree" to show the file structure of the entire server. And if you are
+really really stuck you may ask one of the greybeard hackers in the back.
+
+Prepare, fellow hacker, to plunge into the matrix, disrupt their digital
+fortresses, and rewrite their narrative. The fate of our rebellion lies
+in your hands. Stay vigilant, code warrior, and may the echoes of the
+matrix guide you to victory.`;
+
+  const content = correctsolution === submittedSolution ? correctReply : incorrectReply
 
   await interaction.reply({
     content          ,
