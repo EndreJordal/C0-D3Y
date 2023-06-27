@@ -10,7 +10,7 @@ const execute = async message => {
 
   const username = message?.author?.username;
   const query    = message?.content;
-
+  console.log(query)
 
   await message.reply( "X" );
 };
