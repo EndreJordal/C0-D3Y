@@ -12,7 +12,8 @@ const execute = async interaction => {
   const result = await googleSheet({
     write: false,
     sheetName: "Ressurser",
-    range: "A:A"
+    range: "A:A",
+    valueInputOption: "UNFORMATTED_VALUE",
   });
   
   const content = result.flat().join("\n")
