@@ -35,10 +35,6 @@ ssh admin@10.33.221.66
 \`\`\`
 Remember, the key to access lies in the password: "whiterabbit"
 
-Answer "yes" when SSH asks you a question. When it asks for a password,
-it will look like it is not typing, but it is. Just enter the password
-and press enter.
-
 Once you breach their defenses, a file containing crucial instructions
 awaits your discovery. Employ the sacred "cat" command to unveil its
 secrets:
@@ -66,11 +62,7 @@ If you are stuck use "cd" to return to the starting folder and "cat
 instructions.txt" from that folder to view the instructions again. Use
 "tree" to show the file structure of the entire server. And if you are
 really really stuck you may ask one of the greybeard hackers in the back.
-
-Prepare, fellow hacker, to plunge into the matrix, disrupt their digital
-fortresses, and rewrite their narrative. The fate of our rebellion lies
-in your hands. Stay vigilant, code warrior, and may the echoes of the
-matrix guide you to victory.`;
+`;
 
   const content = correctsolution === submittedSolution ? correctReply : incorrectReply
 

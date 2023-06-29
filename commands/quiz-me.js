@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } from "discord.js";
 import { Configuration, OpenAIApi } from "openai";
 import dotenv from "dotenv";
 
@@ -51,7 +51,7 @@ const execute = async interaction => {
   const openai = new OpenAIApi(configuration);
 
   // Primer for quiz
-  const quizPrimer = "I want you to make me a quiz question. I will give you the subject and difficulty. You will give me the question and 4 possible answers, 1 correct and 3 wrong. You will select the order of the alternatives randomly so the correct answer is in a random position every time. You will list the alternatives i a bulleted list, labeled 1, 2, 3 and 4. After you list the alternatives, you will add a line that says 'Correct answer: X' where X is the number that corresponds to the correct answer."
+  const quizPrimer = "I want you to make me a quiz question. I will give you the subject and difficulty. You will give me the question and 4 possible answers, 1 correct and 3 wrong. You will select the order of the alternatives randomly so the correct answer is in a random position every time. You will list the alternatives i a bulleted list, labeled 1, 2, 3 and 4. After you list the alternatives, you will add a line that says 'Correct answer: X' where X is the number that corresponds to the correct answer. Make a heading with markdown like so:'# Here is your question...' Then put '### ' in front of the actual question. No markup on the alternatives. but remember to label the alternatives 1, 2, 3, and 4"
   const conversationLog = [{ role: "system", content: quizPrimer }]
   
   // Push question to conversation log
@@ -64,11 +64,62 @@ const execute = async interaction => {
     messages: conversationLog,
   })
   
-  console.log(result.data.choices[0].message.content.slice(-1))
-  await interaction.editReply({
-    content: result.data.choices[0].message.content.slice(0, -17),
+  const firstOption = new ButtonBuilder()
+  .setCustomId('1')
+  .setLabel('1')
+  .setStyle(ButtonStyle.Primary);
+
+  const secondOption = new ButtonBuilder()
+  .setCustomId('2')
+  .setLabel('2')
+  .setStyle(ButtonStyle.Primary);
+
+  const thirdOption = new ButtonBuilder()
+  .setCustomId('3')
+  .setLabel('3')
+  .setStyle(ButtonStyle.Primary);
+
+  const fourthOption = new ButtonBuilder()
+  .setCustomId('4')
+  .setLabel('4')
+  .setStyle(ButtonStyle.Primary);
+
+  const row = new ActionRowBuilder()
+  .addComponents(firstOption, secondOption, thirdOption, fourthOption);
+  const gptQuiz = result.data.choices[0].message.content.slice(0, -17)
+  const correctAnswer = result.data.choices[0].message.content.slice(-1)
+  const response = await interaction.editReply({
+    content: gptQuiz,
+    components: [row],
     ephemeral: true,
   });
+  
+  const collectorFilter = i => i.user.id === interaction.user.id;
+
+  const correctReplyArray = [
+    `${gptQuiz}\n### ${correctAnswer} var rett svar, bra jobba!! 😄`,
+    `${gptQuiz}\n### Yes! Rett svar var ${correctAnswer}, bra jobba!! 😄`,
+    `${gptQuiz}\n### Konge! ${correctAnswer} er korrekt, du er sjef!! 😄`,
+    `${gptQuiz}\n### High five! ${correctAnswer} er helt rett, ta ett til spørsmål da? 😄`,
+    `${gptQuiz}\n### ${correctAnswer} var rett! Du er god, vet du det?? 😄`,
+    `${gptQuiz}\n### ${correctAnswer} er 100% rett, nydelig!! 😄`,
+    `${gptQuiz}\n### Kanon!! 💥 ${correctAnswer} er såklart riktig svar! Dette kan du! 😄`,
+  ]
+
+  const tip = "\n\n*TIPS: Trykk piltast opp for å få opp /quiz-me kommandoen du nettopp kjørte, med samme innstillinger for tema/vanskelighet, så kan du bare trykke Enter for et nytt spørsmål!*"
+
+  try {
+	const answer = await response.awaitMessageComponent({ filter: collectorFilter, time: 60000 });
+
+    if (answer.customId === correctAnswer) {
+		await answer.update({ content: correctReplyArray[Math.floor(Math.random() * correctReplyArray.length)] + tip, components: [] });
+	} else  {
+		await answer.update({ content: `${gptQuiz}\n### ${answer.customId} var dessverre feil, ${correctAnswer} var rett. 😥` + tip, components: [] });
+	}
+} catch (e) {
+	await interaction.editReply({ content: 'Du har max 1 minutt på å svare, og tiden er ute 😥', components: [] });
+}
+
 };
 
 export { data, execute };

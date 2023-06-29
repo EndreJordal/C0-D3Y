@@ -8,6 +8,7 @@ dotenv.config();
 const name    = Events.MessageCreate;
 const execute = async message => {
   if ( message?.author?.bot ) return;
+
   // Logging commands to Google Sheets
   const values = [[
     new Date().toLocaleString("nb-NO"),
