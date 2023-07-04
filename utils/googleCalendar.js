@@ -47,12 +47,21 @@ const fetchCalendar = async (calendarId) => {
         isEnd ? 59 : 0
       );
     // A helper function to format the date and time
-    const formatDateTime = (dateTime) =>
-      dateTime ? dateTime.slice(0, 19).replace("T", " ") : "";
+    const formatDateTime = (dateTime) => {
+      if (dateTime) {
+        // Slice the dateTime string to get the hours and minutes
+        let hours = dateTime.slice(11, 13);
+        let minutes = dateTime.slice(14, 16);
+        // Return the formatted time as HH:MM
+        return `${hours}:${minutes}`;
+      } else {
+        return "";
+      }
+    };
     // Get the current date
     const today = new Date();
     const res = await calendar.events.list({
-      calendarId: "c_oglf914522254di2vf1cj26r0s@group.calendar.google.com",
+      calendarId: calendarId,
       timeMin: getDayBoundary(today).toISOString(), // Specify the start of the day as the minimum start time for events
       timeMax: getDayBoundary(today, true).toISOString(), // Specify the end of the day as the maximum end time for events
       singleEvents: true,
@@ -60,14 +69,14 @@ const fetchCalendar = async (calendarId) => {
     });
     const events = res.data.items;
     if (events.length) {
-      const dailySchedule = "";
+      let dailySchedule = "";
       events.forEach(({ start, end, summary }) => {
         // Get the start and end time of each event and format them
         const startTime = formatDateTime(start.dateTime || start.date);
         const endTime = formatDateTime(end.dateTime || end.date);
-        dailySchedule += `${startTime} - ${endTime} : ${summary}\n`;
+        dailySchedule += `* ${startTime} - ${endTime} : ${summary}\n`;
       });
-      return `### Her din timeplan for i dag: \n ${dailySchedule}`;
+      return `### Her din timeplan for i dag:\n${dailySchedule}`;
     } else {
       return "Ingenting på timeplanen i dag!";
     }

@@ -26,9 +26,9 @@ const execute = async (interaction) => {
   } else {
     reply = `# Timeplan \n## Her finner du din timeplan \nDu er i **Modul ${userModule}**\n${await fetchCalendar(
       calendarData[userModule].id
-    )}\nFor tilgang til timeplanen din på Google Calendar, [trykk her.](${
+    )}\n*For tilgang til hele timeplanen din på Google Calendar*, [trykk her.](<${
       calendarData[userModule].url
-    })`;
+    }>)`;
   }
 
   await interaction.reply({
