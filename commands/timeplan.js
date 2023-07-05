@@ -24,9 +24,9 @@ const execute = async (interaction) => {
     reply =
       "Du er ikke oppført i noen moduler akkurat nå 🤔 Vennligst ta kontakt med en veileder for å få fikset dette.";
   } else {
-    reply = `# Timeplan \n## Her finner du din timeplan \nDu er i **Modul ${userModule}**\n${await fetchCalendar(
+    reply = `# Timeplan \n## Du er i **Modul ${userModule}** og her er din timeplan for dagen i dag:\n${await fetchCalendar(
       calendarData[userModule].id
-    )}\n*For tilgang til hele timeplanen din på Google Calendar*, [trykk her.](<${
+    )}\n*For tilgang til hele timeplanen for Modul ${userModule} på Google Calendar*, [trykk her.](<${
       calendarData[userModule].url
     }>)`;
   }

@@ -6,7 +6,8 @@ dotenv.config();
 
 const data = new SlashCommandBuilder()
   .setName("hjelp")
-  .setDescription("Gir en oversikt over funksjoner du kan bruke");
+  .setDescription("Gir en oversikt over funksjoner du kan bruke")
+  .setDMPermission(true);
 
 const execute = async (interaction) => {
   const content = (

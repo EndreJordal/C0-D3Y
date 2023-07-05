@@ -76,7 +76,7 @@ const fetchCalendar = async (calendarId) => {
         const endTime = formatDateTime(end.dateTime || end.date);
         dailySchedule += `* ${startTime} - ${endTime} : ${summary}\n`;
       });
-      return `### Her din timeplan for i dag:\n${dailySchedule}`;
+      return `\n${dailySchedule}`;
     } else {
       return "Ingenting på timeplanen i dag!";
     }

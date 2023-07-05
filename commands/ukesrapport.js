@@ -18,7 +18,7 @@ const execute = async (interaction) => {
   dotenv.config();
 
   const modal = new ModalBuilder()
-    .setTitle("👩‍💻 Send inn din ukesrapport her 💌")
+    .setTitle("👩‍💻 Send inn din ukesrapport 💌")
     .setCustomId(`ukesrapport-${interaction.user.id}`);
 
   const ukesrapportInput = new TextInputBuilder()
