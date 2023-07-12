@@ -1,70 +1,15 @@
-/* function messageSnipper(message) {
-  const firstHalf = message.slice(0, Math.floor(message.length / 2));
-  const blockCheck = "```";
-  // Create a regular expression with the sequence
-  const regex = new RegExp(blockCheck, "g");
-
-  // Use match() with the regex to get an array of matches
-  const matches = message.match(regex);
-
-  // Count the number of matches
-  const count = matches ? matches.length : 0;
-
-  if (count % 2 === 0) {
-    return [
-      message.slice(0, firstHalf.lastIndexOf("\n")),
-      message.slice(firstHalf.lastIndexOf("\n")),
-    ];
-  }
+function messageSnipper(response) {
+  /*
+  Response will be the response of the chatGPT function in the form of a string, which is over 2000 character long.
+  this function will split the response into chunks of max 2000 characters and return an array of strings. It will
+  preserve the formatting of the response, so that the chunks will be split at the end of a sentence, and it will
+  not split inside code blocks, denoted by triple backticks. Neither will it split inside single backticks.
+  */
   return [
-    message.slice(0, firstHalf.lastIndexOf(blockCheck)),
-    message.slice(firstHalf.lastIndexOf(blockCheck)),
+    response.slice(0, 2000),
+    response.slice(2000, 4000),
+    response.slice(4000, 6000),
   ];
-} */
-
-function messageSnipper(message) {
-  const blockCheck = "```";
-  const codeBlockRegex = /```[^`]*```/gs;
-
-  const codeBlocks = message.match(codeBlockRegex) || [];
-  const codeBlockPositions = codeBlocks.map((block) => {
-    const startIndex = message.indexOf(block);
-    const endIndex = startIndex + block.length;
-    return { startIndex, endIndex };
-  });
-
-  let snipIndex = Math.floor(message.length / 2);
-  let closestNewlineIndex = -1;
-
-  for (let i = snipIndex; i < message.length; i++) {
-    if (message[i] === "\n") {
-      closestNewlineIndex = i;
-      break;
-    }
-  }
-
-  if (closestNewlineIndex === -1) {
-    for (let i = snipIndex; i >= 0; i--) {
-      if (message[i] === "\n") {
-        closestNewlineIndex = i;
-        break;
-      }
-    }
-  }
-
-  if (closestNewlineIndex !== -1) {
-    snipIndex = closestNewlineIndex + 1;
-  }
-
-  const snippedMessage = message.slice(0, snipIndex);
-  const remainingMessage = message.slice(snipIndex);
-
-  // Check if either snippet exceeds 2000 characters
-  if (snippedMessage.length > 2000 || remainingMessage.length > 2000) {
-    return ["", ""];
-  }
-
-  return [snippedMessage, remainingMessage];
 }
 
 export { messageSnipper };

@@ -41,12 +41,14 @@ const execute = async (interaction) => {
 
     if (interaction.replied || interaction.deferred)
       await interaction.followUp({
-        content: "There was an error while executing this command!",
+        content:
+          "Her har det skjedd en feil! Ta kontakt med @Endre for å få fikset dette.",
         ephemeral: true,
       });
     else
       await interaction.reply({
-        content: "There was an error while executing this command!",
+        content:
+          "Her har det skjedd en feil! Ta kontakt med @Endre for å få fikset dette.",
         ephemeral: true,
       });
   }

@@ -34,13 +34,12 @@ async function chatGPT(message) {
   const userName = message.author.username;
   const userModule = userRoles.filter((role) => role.startsWith("Modul"));
   const userInfo = `${userName}, ${userModule}`;
-
   // Logging commands to Google Sheets
   const values = [
     [
       new Date().toLocaleString("nb-NO"),
       message.author.username.toLowerCase(),
-      message.content,
+      message.content.length,
     ],
   ];
   const resource = { values };
