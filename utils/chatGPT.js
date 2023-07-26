@@ -82,7 +82,8 @@ async function chatGPT(message) {
     messages: conversationLog,
   });
   // Return response content
-  return result.data.choices[0].message.content;
+  const response = result.data.choices[0].message.content;
+  return response;
 }
 
 export { chatGPT };

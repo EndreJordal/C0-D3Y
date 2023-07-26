@@ -6,7 +6,8 @@ dotenv.config();
 
 const name = Events.MessageCreate;
 const execute = async (message) => {
-  if (message?.author?.bot) return;
+  if (message.author.bot) return;
+
   //If message is a DM to the bot, ChatGPT will respond.
   if (!message.guild) {
     const response = await chatGPT(message);
