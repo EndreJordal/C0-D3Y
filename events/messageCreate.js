@@ -12,7 +12,9 @@ const execute = async (message) => {
   if (!message.guild) {
     const response = await chatGPT(message);
     if (response.length > 2000) {
-      await message.reply("check console for response");
+      await message.reply(
+        "Svar fra ChatGPT for langt for Discord 🤔 Vi jobber med en fiks, denne er snart på plass!"
+      );
     } else {
       await message.reply(response);
     }
